@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Task Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Task Tracker</h1>
+            <p>Stay organized and achieve your goals!</p>
+        </header>
+        <div class="progress-bar">
+            <div class="progress" id="progress" style="width: 0%;"></div>
+        </div>
+        <div class="task-list">
+            <h2>Your Tasks for Today</h2>
+            <div class="task-container"><input type="checkbox" id="task1" class="task-checkbox" onclick="updateProgress()"><label for="task1">1. Morning Review: Revise key Math concepts (20 minutes)</label></div>
+            <div class="task-container"><input type="checkbox" id="task2" class="task-checkbox" onclick="updateProgress()"><label for="task2">2. Focus on learning during school (5:30 AM - 3:30 PM)</label></div>
+            <div class="task-container"><input type="checkbox" id="task3" class="task-checkbox" onclick="updateProgress()"><label for="task3">3. Post-School Science Study (30 minutes)</label></div>
+            <div class="task-container"><input type="checkbox" id="task4" class="task-checkbox" onclick="updateProgress()"><label for="task4">4. GK: Read or review 5 interesting facts (15 minutes)</label></div>
+            <div class="task-container"><input type="checkbox" id="task5" class="task-checkbox" onclick="updateProgress()"><label for="task5">5. Practice Reasoning: Solve 5 questions</label></div>
+            <div class="task-container"><input type="checkbox" id="task6" class="task-checkbox" onclick="updateProgress()"><label for="task6">6. Homework Review (30 minutes)</label></div>
+            <div class="task-container"><input type="checkbox" id="task7" class="task-checkbox" onclick="updateProgress()"><label for="task7">7. Evening Math Practice: Work on 10 problems (30 minutes)</label></div>
+            <div class="task-container"><input type="checkbox" id="task8" class="task-checkbox" onclick="updateProgress()"><label for="task8">8. Interactive Learning: Watch an educational video (20 minutes)</label></div>
+            <div class="task-container"><input type="checkbox" id="task9" class="task-checkbox" onclick="updateProgress()"><label for="task9">9. Revision of Class Notes (15 minutes)</label></div>
+            <div class="task-container"><input type="checkbox" id="task10" class="task-checkbox" onclick="updateProgress()"><label for="task10">10. Reflect and Plan for tomorrow (10 minutes)</label></div>
+        </div>
+        <button class="submit-button" onclick="submitTasks()">Submit Today's Tasks</button>
+        <div class="motivation">
+            <h2>Daily Motivation</h2>
+            <p id="daily-quote">"Success is the sum of small efforts, repeated day in and day out." - Robert Collier</p>
+        </div>
+        <footer>
+            <p id="weekly-score">Weekly Score: 0</p>
+        </footer>
+    </div>
+
+    <script>
+        let weeklyScore = 0;
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const totalTasks = checkboxes.length;
+            const completedTasks = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+            const progressPercentage = (completedTasks / totalTasks) * 100;
+            document.getElementById('progress').style.width = progressPercentage + '%';
+        }
+
+        function submitTasks() {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const totalTasks = checkboxes.length;
+            const completedTasks = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+            alert(`You completed ${completedTasks} out of ${totalTasks} tasks today!`);
+            const dailyScore = completedTasks * 10;
+            weeklyScore += dailyScore;
+            document.getElementById('weekly-score').innerText = `Weekly Score: ${weeklyScore}`;
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+            updateProgress();
+            setReminder();
+        }
+
+        function setReminder() {
+            const tasks = [
+                "Morning Review",
+                "School Learning",
+                "Post-School Study",
+                "GK Reading",
+                "Reasoning Practice",
+                "Homework Review",
+                "Evening Math Practice",
+                "Interactive Learning",
+                "Revision",
+                "Reflect and Plan"
+            ];
+            tasks.forEach((task, index) => {
+                setTimeout(() => {
+                    alert(`Reminder: It's time to do your task - ${task}!`);
+                }, (index + 1) * 1000 * 60 * 60);
+            });
+        }
+
+        function getRandomQuote() {
+            const quotes = [
+                "Believe you can and you're halfway there. - Theodore Roosevelt",
+                "Don't watch the clock; do what it does. Keep going. - Sam Levenson",
+                "Success is not the key to happiness. Happiness is the key to success. - Albert Schweitzer",
+                "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+                "The only limit to our realization of tomorrow will be our doubts of today. - Franklin D. Roosevelt"
+            ];
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('daily-quote').innerText = quotes[randomIndex];
+        }
+
+        window.onload = getRandomQuote;
+
+        function resetWeeklyScore() {
+            weeklyScore = 0;
+            document.getElementById('weekly-score').innerText = `Weekly Score: ${weeklyScore}`;
+        }
+    </script>
+</body>
+</html>
